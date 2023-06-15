@@ -10,16 +10,26 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 export default function Signup({ navigation }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [profilePic, setProfilePic] = useState("");
 
   const HandleSignUp = () => {
     if (email !== "" && password !== "") {
       createUserWithEmailAndPassword(auth, email, password)
-        .then(() => console.log("Login success"))
+        .then((AuthenticatedUser) => {
+          updateProfile(AuthenticatedUser.user, {
+            photoURL: profilePic,
+            displayName: name,
+          });
+        })
+        .then(() => {
+          console.log("Profile picture updated successfully");
+        })
         .catch((err) => Alert.alert(err.message));
     }
   };
@@ -60,9 +70,20 @@ export default function Signup({ navigation }) {
             Welcome to weChat
           </Text>
         </View>
+        <TextInput
+          value={name}
+          onChangeText={(text) => setName(text)}
+          placeholder="full name "
+          style={{
+            backgroundColor: "#fafafa",
+            width: 170,
+            padding: 13,
+            borderRadius: 25,
+          }}
+        />
         <View
           style={{
-            marginTop: 30,
+            marginTop: 5,
           }}
         >
           <TextInput
@@ -81,22 +102,45 @@ export default function Signup({ navigation }) {
 
         <View
           style={{
-            margin: 15,
+            marginTop: 5,
           }}
         >
           <TextInput
             value={password}
+            secureTextEntry
+            focusable
             onChangeText={(text) => setPassword(text)}
             placeholder="password"
-            secureTextEntry
             style={{
               backgroundColor: "#fafafa",
               width: 170,
               padding: 13,
               borderRadius: 25,
             }}
-            onSubmitEditing={HandleSignUp}
           />
+
+          <View
+            style={{
+              marginTop: 5,
+            }}
+          />
+          <TextInput
+            value={profilePic}
+            onChangeText={(text) => setProfilePic(text)}
+            placeholder="PhotoURL  (optional)"
+            style={{
+              backgroundColor: "#fafafa",
+              width: 170,
+              padding: 13,
+              borderRadius: 25,
+            }}
+          />
+
+          <View
+            style={{
+              marginTop: 5,
+            }}
+          ></View>
         </View>
         <TouchableOpacity
           style={{

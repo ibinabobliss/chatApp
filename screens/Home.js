@@ -1,10 +1,11 @@
 import { View, Text, ActivityIndicator } from "react-native";
 import React, { useEffect, useState } from "react";
-import Welcome from "./Welcome";
 import PropagateLoader from "react-spinners/PropagateLoader";
-import Chats from "./MainScreen";
+//import Chats from "./MainScreen";
+import Welcome from "./Welcome";
+import { useLayoutEffect } from "react";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Home() {
         backgroundColor: "#fff",
       }}
     >
-      {isLoading ? <Loader /> : <Chats />}
+      {isLoading ? <Loader /> : <Welcome />}
     </View>
   );
 }

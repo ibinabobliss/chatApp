@@ -6,7 +6,9 @@ import Login from "../screens/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase";
 import Home from "../screens/Home";
-import Chats from "../screens/MainScreen";
+import Contacts from "../screens/Contact";
+//import Chats from "../screens/MainScreen";
+import Welcome from "../screens/Welcome";
 
 const Stack = createNativeStackNavigator();
 const AuthenticatedUserContext = createContext({});
@@ -35,11 +37,18 @@ export default function AuthNavigation({ navigation }) {
           }}
         />
         <Stack.Screen
-          name="Chats"
-          component={Chats}
-          //options={{
-          //  headerShown: false,
-          //}}
+          name="Welcome"
+          component={Welcome}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="User"
+          component={Contacts}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     );
@@ -68,25 +77,6 @@ export default function AuthNavigation({ navigation }) {
 
   function RootNavigator() {
     const { user, setUser } = useContext(AuthenticatedUserContext);
-    //const [isLoading, setLoading] = useState(false);
-
-    // function Loader() {
-    //   return (
-    //     <View>
-    //       <ActivityIndicator size={70} color={"tomato"} />
-    //       <Text
-    //         style={{
-    //           marginTop: 10,
-    //           fontWeight: "bold",
-    //           fontSize: 20,
-    //           color: "#fafafa",
-    //         }}
-    //       >
-    //         Loading Chats ..
-    //       </Text>
-    //     </View>
-    //   );
-    // }
 
     useEffect(() => {
       const Unsubscribe = onAuthStateChanged(

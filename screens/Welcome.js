@@ -1,10 +1,21 @@
-import { View, Text } from "react-native";
-import React from "react";
-
-export default function Welcome() {
+import React, { useLayoutEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { SafeAreaView, TouchableOpacity } from "react-native";
+import NewContact from "./NewContact";
+import TopNotch from "./TopNotch";
+export default function WelcomeScreen({ navigation }) {
+  // const signout = () => {
+  //   signOut(auth).catch((error) => console.log(error));
+  // };
   return (
-    <View>
-      <Text>Welcome</Text>
-    </View>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: "#212121",
+      }}
+    >
+      <TopNotch />
+      <NewContact />
+    </SafeAreaView>
   );
 }
